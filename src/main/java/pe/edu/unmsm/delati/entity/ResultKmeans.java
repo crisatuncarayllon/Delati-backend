@@ -15,11 +15,12 @@ import weka.core.Instances;
 public class ResultKmeans {
     
     ArrayList<NodeKmeans> clusters = new ArrayList();
+    ArrayList<Cluster_Centroid> centroids = new ArrayList();
     //arreglo columnas
     //arreglo clase data
-    //arreglo de clase centroid
     String n_iter ="";
     int total_instances=0;
+    
     private double sumaTotal=0;
     public ResultKmeans() {
     }
@@ -71,6 +72,30 @@ public class ResultKmeans {
     public void setTotal_instances(int total_instances) {
         this.total_instances = total_instances;
     }
+
+    public ArrayList<Cluster_Centroid> getCentroids() {
+        return centroids;
+    }
+
+    public void setCentroids(ArrayList<Cluster_Centroid> centroids) {
+        this.centroids = centroids;
+    }
     
-   
+    
+    //PARA VER LOS PUNTOS O COORDENADAS DE CADA CLUSTER DE ACUERDO A CADA ATRIBUTO
+    
+    public void init_centroids(Instances instancias){
+        
+        for(int i=0;i<instancias.numInstances();i++){
+                double[] puntos_cluster=instancias.get(i).toDoubleArray();
+                String titulo_cluster = instancias.get(i).toString()+", "+i;
+                Cluster_Centroid temp = new Cluster_Centroid(titulo_cluster, puntos_cluster);
+                this.centroids.add(temp);
+                System.out.println("SE AGREGO CENTROID CORRECTAMENTE");
+                System.out.println("instancia -----------"+ i +"  ---- " );
+                System.out.println("titulo   " + titulo_cluster );
+            }
+        
+        
+    }
 }

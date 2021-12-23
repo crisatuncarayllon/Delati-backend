@@ -71,21 +71,39 @@ public class ResultKmeansDAO {
             
             //para obtener los puntos
             for(int i=0;i<instancias.numInstances();i++){
-                System.out.println(instancias.get(i).toString());
+                System.out.println("nombre de la instancia "+ instancias.get(i).toString()+ "isntancia numero "+i);
                 
                 System.out.println(instancias.get(i).numValues());
                 for(int k=0;k<instancias.get(i).numAttributes();k++){
-                    System.out.println(instancias.get(i).attribute(k));
+                    System.out.println("nombre del atributo " + instancias.get(i).attribute(k).toString());
                     System.out.println(instancias.get(i).value(k));//Es el valor o puntos de cada atributo(14 atributos en el query 1) por cada cluster 
                 }
             }
             
             
+            /*System.out.println(data.get(0).stringValue(0)+"---"+data.get(0).index(0));
+            System.out.println(data.get(0).stringValue(1)+"---"+data.get(0).index(5));
+            System.out.println(kmeans);
+            */
+            
+            
+            result.init_centroids(instancias);
+            
+            //PARA VER LOS PUNTOS O COORDENADAS DE CADA CLUSTER DE ACUERDO A CADA ATRIBUTO
+            /*for(int i=0;i<instancias.numInstances();i++){//obtenemos 5 instancias que representan cada cluster
+                double[] a=instancias.get(i).toDoubleArray();
+                
+                System.out.println("instancia -----------"+ (i+1) +"  ---- " );
+                
+                for(int s=0;s<instancias.get(i).numAttributes();s++){
+                    System.out.println(a[s]);
+                }
+                
+            }*/
             
 
-
-
-            //OBTENEMOS A QUE CLUSTER PERTENECE CADA INSTANCIA DEL 0 A 5 
+            //.get(i).relationalValue(0)
+            //OBTENEMOS A QUE CLUSTER PERTENECE CADA INSTANCIA DEL 0 A 1500
             /*int[] centroid=kmeans.getAssignments();
             System.out.println("puntos de los clusters: "+ centroid.length);
             for(int a=0;a<centroid.length;a++){
