@@ -11,7 +11,11 @@ import java.util.ArrayList;
 import pe.edu.unmsm.delati.config.Connection;
 import weka.clusterers.SimpleKMeans;
 import weka.core.Instances;
+import weka.core.Utils;
 import weka.core.converters.DatabaseLoader;
+import weka.experiment.DatabaseUtils;
+import weka.gui.experiment.ExperimenterDefaults;
+import weka.gui.treevisualizer.TreeVisualizer;
 
 /**
  *
@@ -57,80 +61,22 @@ public class ResultKmeansDAO {
             kmeans.setMaxIterations(request.getMax_iter());
             kmeans.buildClusterer(data);
             double[] sizes=kmeans.getClusterSizes();
-            //int[] centroid=kmeans.getAssignments();
-            
             Instances instancias = kmeans.getClusterCentroids();
             ResultKmeans result = new ResultKmeans();
-            result.initNodes(sizes);
-            result.setRelationNames(instancias);
+            result.initNodes(sizes,instancias);
             result.setTotal_instances(data.size());
-            
-            /*Probando valores*/
-            //System.out.println(kmeans);
-            
-            
-            //para obtener los puntos
-            for(int i=0;i<instancias.numInstances();i++){
-                System.out.println("nombre de la instancia "+ instancias.get(i).toString()+ "isntancia numero "+i);
-                
-                System.out.println(instancias.get(i).numValues());
-                for(int k=0;k<instancias.get(i).numAttributes();k++){
-                    System.out.println("nombre del atributo " + instancias.get(i).attribute(k).toString());
-                    System.out.println(instancias.get(i).value(k));//Es el valor o puntos de cada atributo(14 atributos en el query 1) por cada cluster 
-                }
-            }
-            
-            
-            /*System.out.println(data.get(0).stringValue(0)+"---"+data.get(0).index(0));
-            System.out.println(data.get(0).stringValue(1)+"---"+data.get(0).index(5));
-            System.out.println(kmeans);
-            */
-            
-            
             result.init_centroids(instancias);
-            
-            //PARA VER LOS PUNTOS O COORDENADAS DE CADA CLUSTER DE ACUERDO A CADA ATRIBUTO
-            /*for(int i=0;i<instancias.numInstances();i++){//obtenemos 5 instancias que representan cada cluster
-                double[] a=instancias.get(i).toDoubleArray();
-                
-                System.out.println("instancia -----------"+ (i+1) +"  ---- " );
-                
-                for(int s=0;s<instancias.get(i).numAttributes();s++){
-                    System.out.println(a[s]);
-                }
-                
-            }*/
-            
-
-            //.get(i).relationalValue(0)
-            //OBTENEMOS A QUE CLUSTER PERTENECE CADA INSTANCIA DEL 0 A 1500
-            /*int[] centroid=kmeans.getAssignments();
-            System.out.println("puntos de los clusters: "+ centroid.length);
-            for(int a=0;a<centroid.length;a++){
-                System.out.println(centroid[a]);
-            }*/
-
-            //PARA OBTENER EL NOMBRE DE CADA COLUMNA
-            /*for(int i=0;i<data.numAttributes();i++){
-                
-                System.out.println(data.get(0).attribute(i).name());
-                
-            }*/
-            
-            //PARA OBTENER LOS DATOS DE CADA FILA POR COLUMNA (I)
-            /*for(int i=0;i<data.numInstances();i++){
-                
-                System.out.println(data.get(i).stringValue(0));
-                
-            }*/
+            result.init_columns(data);
+            result.init_data(data,kmeans.getAssignments());
+           
+            /*OTRAS PRUEBAS
+            NO SE ENCONTRO VARIANZA, INERCIA, NUMERO DE ITERACIONES EJECUTADAS 
+            DISTANCIA DE CADA CLUSTER
+            */
+            System.out.println(kmeans);
             
             
-            /*Fin prueba de valores*/
-            
-            
-            //System.out.println(instancias.instance(0).numValues());
-            //System.out.println(instancias.instance(0).stringValue(13));
-            //return result.getListNodes();
+           
             return result;
         }catch(Exception e1){
             System.out.println("Fallo el metodo 'getKmeans': "+ e1);

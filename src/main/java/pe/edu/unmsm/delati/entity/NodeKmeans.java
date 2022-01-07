@@ -5,6 +5,8 @@
  */
 package pe.edu.unmsm.delati.entity;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author CHRISTOPER
@@ -13,13 +15,15 @@ public class NodeKmeans {
     private String Cluster;
     private double length;
     private double Percentage;
-    private String title_cluster;
+    private ArrayList<Object> title_cluster;
 
-    public NodeKmeans(String name, double size) {
-        this.Cluster = name;
-        this.length = size;
+    public NodeKmeans(String Cluster, double length, ArrayList<Object> title_cluster) {
+        this.Cluster = Cluster;
+        this.length = length;
+        this.title_cluster = title_cluster;
     }
 
+    
     public String getCluster() {
         return Cluster;
     }
@@ -44,15 +48,15 @@ public class NodeKmeans {
         this.Percentage = Percentage;
     }
 
-
-    public String getTitle_cluster() {
+    public ArrayList<Object> getTitle_cluster() {
         return title_cluster;
     }
 
-    public void setTitle_cluster(String title_cluster) {
+    public void setTitle_cluster(ArrayList<Object> title_cluster) {
         this.title_cluster = title_cluster;
     }
-    
+
+
     
     
 }

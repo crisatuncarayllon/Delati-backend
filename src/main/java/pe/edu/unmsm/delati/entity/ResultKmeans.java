@@ -5,7 +5,10 @@
  */
 package pe.edu.unmsm.delati.entity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import javax.management.StringValueExp;
 import weka.core.Instances;
 
 /**
@@ -16,8 +19,9 @@ public class ResultKmeans {
     
     ArrayList<NodeKmeans> clusters = new ArrayList();
     ArrayList<Cluster_Centroid> centroids = new ArrayList();
-    //arreglo columnas
-    //arreglo clase data
+    ArrayList<String> columns = new ArrayList();
+    All_data data = new All_data();
+    
     String n_iter ="";
     int total_instances=0;
     
@@ -25,13 +29,24 @@ public class ResultKmeans {
     public ResultKmeans() {
     }
     
-    public void initNodes(double[] nodes){
+    public void initNodes(double[] nodes, Instances instancias){
         NodeKmeans temporal = null;
         
+        int num=instancias.get(0).numAttributes()+1;
         for(int i=0; i<nodes.length;i++){
+            ArrayList<Object> titulosTemporales =new ArrayList<>();
             String name = "cluster "+(i+1);
-            temporal = new NodeKmeans(name,nodes[i]);
+            Object temporalTitle;
+            for(int k=0; k<num;k++){
+                if(k<num-1){
+                    temporalTitle=instancias.get(i).stringValue(k);
+                }else{
+                    temporalTitle=i+1;
+                } 
+                titulosTemporales.add(temporalTitle);
+            }
             sumaTotal=sumaTotal+nodes[i];
+            temporal = new NodeKmeans(name,nodes[i],titulosTemporales);
             this.clusters.add(temporal);
         }
         modifyPerce(nodes);
@@ -39,15 +54,15 @@ public class ResultKmeans {
     
     public void modifyPerce(double[] nodes){
         for(int i = 0; i<clusters.size();i++){
-            clusters.get(i).setPercentage((nodes[i]/sumaTotal)*100);
+            Double temporal=(nodes[i]/sumaTotal)*100;
+            String porcentajeFormateado= String.format("%.02f",temporal );
+            String temp2 = porcentajeFormateado.replace(",", ".");
+            Double porc=Double.parseDouble(temp2);
+            clusters.get(i).setPercentage(porc);
         }
     }
 
-    public void setRelationNames(Instances instancias){
-        for(int i = 0; i<clusters.size();i++){
-            clusters.get(i).setTitle_cluster(instancias.instance(i).toString());
-        }
-    }
+    
     
     public ArrayList<NodeKmeans> getClusters() {
         return clusters;
@@ -80,22 +95,89 @@ public class ResultKmeans {
     public void setCentroids(ArrayList<Cluster_Centroid> centroids) {
         this.centroids = centroids;
     }
+
+    public ArrayList<String> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(ArrayList<String> columns) {
+        this.columns = columns;
+    }
+
+    public All_data getData() {
+        return data;
+    }
+
+    public void setData(All_data data) {
+        this.data = data;
+    }
     
     
     //PARA VER LOS PUNTOS O COORDENADAS DE CADA CLUSTER DE ACUERDO A CADA ATRIBUTO
     
     public void init_centroids(Instances instancias){
-        
+        int num=instancias.get(0).numAttributes()+1;
         for(int i=0;i<instancias.numInstances();i++){
-                double[] puntos_cluster=instancias.get(i).toDoubleArray();
-                String titulo_cluster = instancias.get(i).toString()+", "+i;
-                Cluster_Centroid temp = new Cluster_Centroid(titulo_cluster, puntos_cluster);
+            ArrayList<Object> titulo_array =new ArrayList<>();
+            Object titulo_cluster=i;    
+            double[] puntos_cluster=instancias.get(i).toDoubleArray();
+                
+            for(int k=0;k<num;k++){
+                titulo_cluster=i+1;
+                if(k<num-1){
+                    titulo_cluster=instancias.get(i).stringValue(k);
+                }
+                titulo_array.add(titulo_cluster);
+            }
+                
+                Cluster_Centroid temp = new Cluster_Centroid(titulo_array, puntos_cluster);
                 this.centroids.add(temp);
-                System.out.println("SE AGREGO CENTROID CORRECTAMENTE");
-                System.out.println("instancia -----------"+ i +"  ---- " );
-                System.out.println("titulo   " + titulo_cluster );
             }
         
         
+    }
+    
+    public void init_columns(Instances instancias){
+            //PARA OBTENER EL NOMBRE DE CADA COLUMNA
+            for(int i=0;i<instancias.numAttributes();i++){
+                columns.add(instancias.get(0).attribute(i).name());
+            }
+    }
+    
+    
+                
+    
+    
+    public void init_data(Instances instancias, int[] cluster_assig){
+        //PARA OBTENER LOS DATOS DE CADA FILA POR COLUMNA (I)
+        for(int i=0;i<instancias.numInstances();i++){  
+            HashMap<String, Object> data_temporal=new HashMap<String, Object>();
+            int num=instancias.get(i).numAttributes()+2;
+            String clave_temp;
+            Object valor_temp;
+            for(int k=0;k<num;k++){
+                if(k<num-2){
+                    clave_temp=instancias.get(i).attribute(k).name();
+                    valor_temp=instancias.get(i).stringValue(k);       
+                }else if(k==num-2){
+                    clave_temp="index";
+                    valor_temp=instancias.get(i).index(i)+1;
+                    //valor_temp=String.valueOf(instancias.get(i).index(i));
+                }else{
+                    clave_temp="cluster";
+                    valor_temp=cluster_assig[i];
+                    
+                }
+                if(clave_temp=="?"){
+                    clave_temp=null;
+                }
+                if(valor_temp=="?"){
+                    valor_temp=null;
+                }
+                data_temporal.put(clave_temp,valor_temp);
+            }
+            data.addData(data_temporal);
+                
+        }
     }
 }

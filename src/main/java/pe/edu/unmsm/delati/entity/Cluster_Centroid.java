@@ -12,19 +12,21 @@ import java.util.ArrayList;
  * @author CHRISTOPER
  */
 public class Cluster_Centroid {
-    private String title_cluster;
+    private ArrayList<Object> title_cluster;
     private double[] point ;
 
-    
-    public String getTitle_cluster() {
+    public ArrayList<Object> getTitle_cluster() {
         return title_cluster;
     }
 
-    public void setTitle_cluster(String title_cluster) {
+    public void setTitle_cluster(ArrayList<Object> title_cluster) {
         this.title_cluster = title_cluster;
     }
 
-    public Cluster_Centroid(String title_cluster, double[] point) {
+    
+   
+
+    public Cluster_Centroid(ArrayList title_cluster, double[] point) {
         this.title_cluster = title_cluster;
         this.point = point;
     }
