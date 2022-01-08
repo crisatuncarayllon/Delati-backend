@@ -13,7 +13,7 @@ import weka.clusterers.SimpleKMeans;
 import weka.core.Instances;
 import weka.core.Utils;
 import weka.core.converters.DatabaseLoader;
-import weka.experiment.DatabaseUtils;
+
 import weka.gui.experiment.ExperimenterDefaults;
 import weka.gui.treevisualizer.TreeVisualizer;
 
