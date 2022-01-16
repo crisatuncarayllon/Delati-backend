@@ -10,7 +10,7 @@
 
 # JDBC driver (comma-separated list)
 #jdbcDriver=org.postgresql.Driver
-#jdbcDriver=com.postgresql.Driver
+jdbcDriver=com.postgresql.Driver
 
 # database URL
 # jdbcURL=jdbc:postgresql://server_name:5432/database_name
