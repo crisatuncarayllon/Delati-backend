@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import pe.edu.unmsm.delati.entity.JSONQuery;
 import pe.edu.unmsm.delati.entity.JSONQueryKmeans;
 import pe.edu.unmsm.delati.entity.Node;
-import pe.edu.unmsm.delati.entity.NodeKmeans;
-import pe.edu.unmsm.delati.entity.Result;
 import pe.edu.unmsm.delati.entity.ResultDAO;
 import pe.edu.unmsm.delati.entity.ResultKmeans;
 import pe.edu.unmsm.delati.entity.ResultKmeansDAO;
-import weka.core.Instances;
 
 
 @RestController
