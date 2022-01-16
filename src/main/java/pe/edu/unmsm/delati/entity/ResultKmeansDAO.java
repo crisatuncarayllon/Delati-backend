@@ -5,17 +5,12 @@
  */
 package pe.edu.unmsm.delati.entity;
 
-import ch.qos.logback.core.CoreConstants;
 import java.io.IOException;
-import java.util.ArrayList;
 import pe.edu.unmsm.delati.config.Connection;
 import weka.clusterers.SimpleKMeans;
 import weka.core.Instances;
-import weka.core.Utils;
 import weka.core.converters.DatabaseLoader;
 
-import weka.gui.experiment.ExperimenterDefaults;
-import weka.gui.treevisualizer.TreeVisualizer;
 
 /**
  *

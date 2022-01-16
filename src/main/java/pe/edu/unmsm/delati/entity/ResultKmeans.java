@@ -5,10 +5,8 @@
  */
 package pe.edu.unmsm.delati.entity;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.management.StringValueExp;
 import weka.core.Instances;
 
 /**

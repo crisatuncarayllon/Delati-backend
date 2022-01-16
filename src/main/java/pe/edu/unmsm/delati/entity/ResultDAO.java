@@ -1,18 +1,13 @@
 package pe.edu.unmsm.delati.entity;
 
-import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 import pe.edu.unmsm.delati.config.Connection;
-import weka.classifiers.trees.J48;
 import weka.clusterers.ClusterEvaluation;
 import weka.core.Instances;
 import weka.core.converters.DatabaseLoader;
 import weka.clusterers.Cobweb;
-import weka.gui.treevisualizer.PlaceNode2;
-import weka.gui.treevisualizer.TreeVisualizer;
 
-import weka.classifiers.*;
 
 public class ResultDAO {
     Instances data;
