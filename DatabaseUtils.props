@@ -10,13 +10,13 @@
 
 # JDBC driver (comma-separated list)
 #jdbcDriver=org.postgresql.Driver
-jdbcDriver=jdbc.idb.Driver
+#jdbcDriver=com.postgresql.Driver
 
 # database URL
 # jdbcURL=jdbc:postgresql://server_name:5432/database_name
 # jdbcURL=jdbc:postgresql://localhost:5432/tcs7
-#jdbcURL=jdbc:postgresql://128.199.1.222:5432/delati
-jdbcURL=jdbc:idb=experiments.prp
+jdbcURL=jdbc:postgresql://128.199.1.222:5432/giinwedb
+#jdbcURL=jdbc:idb=experiments.prp
 
 
 # specific data types
